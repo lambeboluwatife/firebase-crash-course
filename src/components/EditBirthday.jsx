@@ -37,7 +37,7 @@ const EditBirthday = ({ currentBirthday, onUpdate, isEditing }) => {
         <input
           type="text"
           defaultValue={currentBirthday.name}
-          onChange={(e) => setName(e.target.defaultValue)}
+          onChange={(e) => setName(e.target.value)}
         />
       </div>
 
@@ -46,7 +46,7 @@ const EditBirthday = ({ currentBirthday, onUpdate, isEditing }) => {
         <input
           type="date"
           defaultValue={currentBirthday.date}
-          onChange={(e) => setDate(e.target.defaultValue)}
+          onChange={(e) => setDate(e.target.value)}
         />
       </div>
 

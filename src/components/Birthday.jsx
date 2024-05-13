@@ -10,7 +10,6 @@ const Birthday = ({
   showDeleteModal,
   showDelete,
 }) => {
-  console.log(birthday);
   return (
     <>
       <div className="birthday">

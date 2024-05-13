@@ -13,6 +13,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const App = () => {
@@ -84,13 +85,16 @@ const App = () => {
   };
 
   // Edit Birthday
-  // const onUpdate = async (id, updatedBirthday) => {
-  //   db.birthdays.update(id, updatedBirthday).then(function (updated) {
-  //     if (updated) alert("Updated");
-  //   });
-
-  //   setIsEditing(false);
-  // };
+  const onUpdate = async (id, updatedBirthday) => {
+    try {
+      const birthdayToUpdate = doc(db, "birthdays", id);
+      await updateDoc(birthdayToUpdate, updatedBirthday);
+      alert("Birthday Updated");
+    } catch (err) {
+      alert("Error updating birthday", err);
+    }
+    setIsEditing(false);
+  };
 
   // Delete Birthday
   const deleteBirthday = async (id) => {
@@ -114,7 +118,7 @@ const App = () => {
       />
       {isEditing && (
         <EditBirthday
-          // onUpdate={onUpdate}
+          onUpdate={onUpdate}
           currentBirthday={currentBirthday}
           isEditing={() => setIsEditing(!isEditing)}
         />

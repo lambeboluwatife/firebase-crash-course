@@ -12,6 +12,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 
 const App = () => {
@@ -72,12 +73,30 @@ const App = () => {
     alert("Birthday Added");
   };
 
+  // Select Birthday to Edit
+  const editBirthday = async (id) => {
+    setShowAddBirthday(false);
+    setIsEditing(true);
+    const birthdayToEdit = doc(db, "birthdays", id);
+    getDoc(birthdayToEdit).then((doc) => {
+      setCurrentBirthday({ ...doc.data(), id });
+    });
+  };
+
+  // Edit Birthday
+  // const onUpdate = async (id, updatedBirthday) => {
+  //   db.birthdays.update(id, updatedBirthday).then(function (updated) {
+  //     if (updated) alert("Updated");
+  //   });
+
+  //   setIsEditing(false);
+  // };
+
   // Delete Birthday
   const deleteBirthday = async (id) => {
-    console.log(id);
     const birthdayToDelete = doc(db, "birthdays", id);
     await deleteDoc(birthdayToDelete);
-    console.log("Birthday Deleted");
+    setShowDeleteModal(false);
   };
 
   // Fade In Animation
@@ -95,7 +114,7 @@ const App = () => {
       />
       {isEditing && (
         <EditBirthday
-          onUpdate={onUpdate}
+          // onUpdate={onUpdate}
           currentBirthday={currentBirthday}
           isEditing={() => setIsEditing(!isEditing)}
         />
@@ -114,7 +133,7 @@ const App = () => {
               showBirthdays={showBirthdays}
               loading={loading}
               onDelete={deleteBirthday}
-              // onEditClick={editBirthday}
+              onEditClick={editBirthday}
               showDeleteModal={showDeleteModal}
               showDelete={() => setShowDeleteModal(!showDeleteModal)}
             />
